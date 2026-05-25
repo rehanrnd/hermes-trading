@@ -24,7 +24,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
-          railway up --ci \
+          railway up --detach --json \
             --project 19417c45-c24c-4778-8cf2-332c7c53de4f \
             --service hermes-trading \
             --environment production \
