@@ -13,8 +13,8 @@ class LoopReport:
     recommendation: str
 
 
-def run_reflection_loop(goal: Goal, prices: list[float], signals: list[float]) -> LoopReport:
-    result = run_paper_backtest(prices, signals)
+def run_reflection_loop(goal: Goal, prices: list[float], signals: list[float], **backtest_kwargs) -> LoopReport:
+    result = run_paper_backtest(prices, signals, **backtest_kwargs)
     recommendation = reflection_recommendation(
         result,
         target_drawdown=goal.max_drawdown,
@@ -23,8 +23,8 @@ def run_reflection_loop(goal: Goal, prices: list[float], signals: list[float]) -
     return LoopReport(result=result, recommendation=recommendation)
 
 
-def run_reflection_loop_from_market_data(goal: Goal, market_data: MarketData) -> LoopReport:
-    result = run_paper_backtest_from_market_data(market_data)
+def run_reflection_loop_from_market_data(goal: Goal, market_data: MarketData, **backtest_kwargs) -> LoopReport:
+    result = run_paper_backtest_from_market_data(market_data, **backtest_kwargs)
     recommendation = reflection_recommendation(
         result,
         target_drawdown=goal.max_drawdown,

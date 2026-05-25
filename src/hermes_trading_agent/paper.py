@@ -74,11 +74,30 @@ def run_paper_backtest(
     *,
     initial_cash: float = 10_000.0,
     position_fraction: float = 0.10,
+    fee_bps: float = 0.0,
+    slippage_bps: float = 0.0,
 ) -> SimulationResult:
     if len(prices) != len(signals):
         raise ValueError("prices and signals must have the same length")
     if not prices:
         raise ValueError("prices cannot be empty")
+    if fee_bps < 0:
+        raise ValueError("fee_bps cannot be negative")
+    if slippage_bps < 0:
+        raise ValueError("slippage_bps cannot be negative")
+
+    fee_rate = fee_bps / 10_000.0
+    slippage_rate = slippage_bps / 10_000.0
+
+    def entry_fill(price: float, side: int) -> float:
+        if side > 0:
+            return price * (1.0 + slippage_rate)
+        return price * (1.0 - slippage_rate)
+
+    def exit_fill(price: float, side: int) -> float:
+        if side > 0:
+            return price * (1.0 - slippage_rate)
+        return price * (1.0 + slippage_rate)
 
     cash = initial_cash
     position_qty = 0.0
@@ -93,24 +112,27 @@ def run_paper_backtest(
         desired_side = _sign(signal)
 
         if position_side != 0 and desired_side != position_side:
+            exit_price = exit_fill(price, position_side)
             trade = Trade(
                 side="long" if position_side > 0 else "short",
                 entry_price=entry_price,
-                exit_price=price,
+                exit_price=exit_price,
                 quantity=position_qty,
             )
             cash += trade.pnl
+            cash -= abs(exit_price * position_qty) * fee_rate
             trades.append(trade)
             position_qty = 0.0
             position_side = 0
             entry_price = 0.0
 
         if position_side == 0 and desired_side != 0:
+            fill_price = entry_fill(price, desired_side)
             notional = cash * position_fraction
-            position_qty = 0.0 if price == 0 else notional / price
+            position_qty = 0.0 if fill_price == 0 else notional / fill_price
             position_side = desired_side
-            entry_price = price
-            cash -= notional * 0.0  # explicit no-op; keeps the capital model simple
+            entry_price = fill_price
+            cash -= notional * fee_rate
 
         mark_to_market = 0.0
         if position_side != 0:
@@ -123,13 +145,15 @@ def run_paper_backtest(
         previous_equity = equity
 
     if position_side != 0:
+        exit_price = exit_fill(prices[-1], position_side)
         trade = Trade(
             side="long" if position_side > 0 else "short",
             entry_price=entry_price,
-            exit_price=prices[-1],
+            exit_price=exit_price,
             quantity=position_qty,
         )
         cash += trade.pnl
+        cash -= abs(exit_price * position_qty) * fee_rate
         trades.append(trade)
         equity_curve[-1] = cash
         returns[-1] = 0.0 if len(equity_curve) < 2 else (equity_curve[-1] - equity_curve[-2]) / equity_curve[-2]

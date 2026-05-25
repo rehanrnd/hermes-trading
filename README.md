@@ -26,7 +26,7 @@ A local, reproducible scaffold for a trading agent workflow.
 - `src/hermes_trading_agent/dashboard.py` — HTML dashboard renderer
 - `scripts/show_goal.py` — quick local inspection command
 - `src/hermes_trading_agent/data.py` — CSV market-data ingestion
-- `scripts/demo_paper.py` — demo simulation and reflection output (optionally from CSV)
+- `scripts/demo_paper.py` — demo simulation and reflection output (optionally from CSV or with cost model flags)
 - `scripts/run_dashboard.py` — local dashboard server on `127.0.0.1:8787`
 
 ## Next steps
@@ -39,3 +39,5 @@ A local, reproducible scaffold for a trading agent workflow.
   - `python scripts/demo_paper.py`
 - Run against sample CSV data:
   - `python scripts/demo_paper.py --data-csv data/sample_market_data.csv`
+- Run with a simple cost model:
+  - `python scripts/demo_paper.py --fee-bps 10 --slippage-bps 100`
