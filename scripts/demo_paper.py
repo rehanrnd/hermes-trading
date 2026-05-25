@@ -12,6 +12,7 @@ if str(SRC) not in sys.path:
 from hermes_trading_agent.agent_loop import run_reflection_loop
 from hermes_trading_agent.data import load_market_data_csv
 from hermes_trading_agent.goal import load_goal
+from hermes_trading_agent.journal import write_trade_journal_csv
 
 
 def build_parser() -> ArgumentParser:
@@ -26,6 +27,11 @@ def build_parser() -> ArgumentParser:
         type=float,
         default=0.0,
         help="Optional round-trip fee model in basis points per side",
+    )
+    parser.add_argument(
+        "--journal-csv",
+        type=Path,
+        help="Optional path to write a per-trade CSV journal",
     )
     parser.add_argument(
         "--slippage-bps",
@@ -66,6 +72,15 @@ def main() -> None:
     print("Max drawdown:", round(report.result.max_drawdown * 100, 2), "%")
     print("Sharpe:", round(report.result.sharpe, 3))
     print("Recommendation:", report.recommendation)
+
+    if args.journal_csv is not None:
+        journal_path = write_trade_journal_csv(
+            args.journal_csv,
+            report.result,
+            asset=goal.asset,
+            source=source,
+        )
+        print("Journal:", journal_path)
 
 
 if __name__ == "__main__":
