@@ -1,0 +1,22 @@
+{
+  "agents": [
+    {
+      "name": "research",
+      "role": "data_intake",
+      "status": "idle",
+      "purpose": "Collect market ideas, hypotheses, and source snapshots."
+    },
+    {
+      "name": "execution",
+      "role": "paper_trading",
+      "status": "idle",
+      "purpose": "Run the paper-trading loop and produce trade journals."
+    },
+    {
+      "name": "reflection",
+      "role": "evaluation",
+      "status": "idle",
+      "purpose": "Review the latest closed trades and suggest one change."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+asset: "XAUUSD"
+# User specified aggressive daily compounding target.
+target_return_daily: 0.07
+# Original prompt field kept for compatibility; not a 30-day total target.
+target_return_30d: null
+max_drawdown: 0.08
+min_sharpe: 1.2
+failure_below: -0.04
+reflection_every: 5
+one_variable_only: true
+notes:
+  strategy_summary: "Trade XAUUSD as the primary asset with 7% daily compounding target, 8% max drawdown, and Sharpe floor 1.2."
+  confirmed_by_user: true
