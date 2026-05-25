@@ -13,6 +13,7 @@ from hermes_trading_agent.agent_loop import run_reflection_loop
 from hermes_trading_agent.data import load_market_data_csv
 from hermes_trading_agent.goal import load_goal
 from hermes_trading_agent.journal import write_trade_journal_csv
+from hermes_trading_agent.summary import write_backtest_summary_json
 
 
 def build_parser() -> ArgumentParser:
@@ -27,6 +28,11 @@ def build_parser() -> ArgumentParser:
         type=float,
         default=0.0,
         help="Optional round-trip fee model in basis points per side",
+    )
+    parser.add_argument(
+        "--summary-json",
+        type=Path,
+        help="Optional path to write a backtest summary JSON file",
     )
     parser.add_argument(
         "--journal-csv",
@@ -81,6 +87,15 @@ def main() -> None:
             source=source,
         )
         print("Journal:", journal_path)
+
+    if args.summary_json is not None:
+        summary_path = write_backtest_summary_json(
+            args.summary_json,
+            goal,
+            report.result,
+            source=source,
+        )
+        print("Summary:", summary_path)
 
 
 if __name__ == "__main__":

@@ -27,6 +27,7 @@ A local, reproducible scaffold for a trading agent workflow.
 - `scripts/show_goal.py` — quick local inspection command
 - `src/hermes_trading_agent/data.py` — CSV market-data ingestion
 - `src/hermes_trading_agent/journal.py` — per-trade CSV journal export
+- `src/hermes_trading_agent/summary.py` — backtest summary JSON export
 - `scripts/demo_paper.py` — demo simulation and reflection output (optionally from CSV or with cost model flags)
 - `scripts/run_dashboard.py` — local dashboard server on `127.0.0.1:8787`
 
@@ -44,3 +45,5 @@ A local, reproducible scaffold for a trading agent workflow.
   - `python scripts/demo_paper.py --fee-bps 10 --slippage-bps 100`
 - Export a trade journal CSV:
   - `python scripts/demo_paper.py --journal-csv out/trade_journal.csv`
+- Export a backtest summary JSON:
+  - `python scripts/demo_paper.py --summary-json out/summary.json`
