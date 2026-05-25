@@ -5,6 +5,8 @@ from math import sqrt
 from statistics import fmean, pstdev
 from typing import Iterable
 
+from .data import MarketData
+
 
 @dataclass(frozen=True)
 class Trade:
@@ -143,6 +145,13 @@ def run_paper_backtest(
         sharpe=compute_sharpe(returns),
         total_return=total_return,
     )
+
+
+def run_paper_backtest_from_market_data(
+    market_data: MarketData,
+    **kwargs,
+) -> SimulationResult:
+    return run_paper_backtest(market_data.prices, market_data.signals, **kwargs)
 
 
 def reflection_recommendation(result: SimulationResult, *, target_drawdown: float, target_sharpe: float) -> str:

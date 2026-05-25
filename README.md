@@ -25,11 +25,17 @@ A local, reproducible scaffold for a trading agent workflow.
 - `src/hermes_trading_agent/agents.py` — agent registry loader
 - `src/hermes_trading_agent/dashboard.py` — HTML dashboard renderer
 - `scripts/show_goal.py` — quick local inspection command
-- `scripts/demo_paper.py` — demo simulation and reflection output
+- `src/hermes_trading_agent/data.py` — CSV market-data ingestion
+- `scripts/demo_paper.py` — demo simulation and reflection output (optionally from CSV)
 - `scripts/run_dashboard.py` — local dashboard server on `127.0.0.1:8787`
 
 ## Next steps
-1. Connect data ingestion.
-2. Add paper-trading execution.
-3. Add evaluation and reflection loop.
-4. Add a dashboard only after the core workflow is stable.
+1. Add paper-trading execution from recorded market data.
+2. Add evaluation and reflection loop.
+3. Add a dashboard only after the core workflow is stable.
+
+## Quick examples
+- Run the default synthetic demo:
+  - `python scripts/demo_paper.py`
+- Run against sample CSV data:
+  - `python scripts/demo_paper.py --data-csv data/sample_market_data.csv`
