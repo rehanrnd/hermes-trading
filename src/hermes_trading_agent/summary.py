@@ -30,5 +30,6 @@ def render_backtest_summary_json(goal: Goal, result: SimulationResult, *, source
 
 def write_backtest_summary_json(path: str | Path, goal: Goal, result: SimulationResult, *, source: str) -> Path:
     summary_path = Path(path)
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
     summary_path.write_text(render_backtest_summary_json(goal, result, source=source), encoding="utf-8")
     return summary_path

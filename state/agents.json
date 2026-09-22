@@ -1,22 +1,36 @@
 {
   "agents": [
     {
-      "name": "research",
-      "role": "data_intake",
-      "status": "idle",
-      "purpose": "Collect market ideas, hypotheses, and source snapshots."
+      "current_task": "Watch the XAU proxy feed and keep the paper trader aligned with the live signal.",
+      "health": "active",
+      "last_update": "2026-05-30T03:58:01+00:00",
+      "name": "trading",
+      "next_action": "Watch for the next clean entry.",
+      "notes": "Paper-first, withdrawals disabled, and every change stays auditable.",
+      "performance_summary": "Closed trades: 9 | Realized PnL: $-3.70 | Open position: none | Signal: flat / wait",
+      "progress": 79,
+      "purpose": "Monitor XAU around the clock, wait for a clean entry, and keep risk inside guardrails.",
+      "role": "execution",
+      "status": "monitoring",
+      "watch_action": "wait",
+      "watch_asset": "XAU",
+      "watch_change_pct": 0.8273762245168124,
+      "watch_price": 4569.9,
+      "watch_signal": "flat",
+      "watch_symbol": "GC=F",
+      "watch_updated_at": "2026-05-30T03:58:01+00:00"
     },
     {
-      "name": "execution",
-      "role": "paper_trading",
-      "status": "idle",
-      "purpose": "Run the paper-trading loop and produce trade journals."
-    },
-    {
-      "name": "reflection",
-      "role": "evaluation",
-      "status": "idle",
-      "purpose": "Review the latest closed trades and suggest one change."
+      "current_task": "Scan active campaigns and shortlist the ones worth tracking.",
+      "health": "watching",
+      "last_update": "5m ago",
+      "name": "airdrop",
+      "next_action": "Collect network, wallet, and task prerequisites.",
+      "notes": "Focus on low-risk participation, wallet hygiene, and checklist logging.",
+      "progress": 41,
+      "purpose": "Track crypto airdrop opportunities, eligibility rules, and claim windows.",
+      "role": "research_ops",
+      "status": "researching"
     }
   ]
 }

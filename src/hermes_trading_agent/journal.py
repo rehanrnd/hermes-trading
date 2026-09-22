@@ -48,5 +48,6 @@ def render_trade_journal_csv(result: SimulationResult, *, asset: str, source: st
 
 def write_trade_journal_csv(path: str | Path, result: SimulationResult, *, asset: str, source: str) -> Path:
     journal_path = Path(path)
+    journal_path.parent.mkdir(parents=True, exist_ok=True)
     journal_path.write_text(render_trade_journal_csv(result, asset=asset, source=source), encoding="utf-8")
     return journal_path

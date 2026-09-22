@@ -14,29 +14,61 @@ class AgentCard:
     purpose: str
     last_update: str | None = None
     notes: str | None = None
+    current_task: str | None = None
+    next_action: str | None = None
+    health: str | None = None
+    progress: int | None = None
+    watch_asset: str | None = None
+    watch_symbol: str | None = None
+    watch_price: float | None = None
+    watch_change_pct: float | None = None
+    watch_signal: str | None = None
+    watch_action: str | None = None
+    watch_updated_at: str | None = None
+    performance_summary: str | None = None
 
 
 def _default_agents() -> list[AgentCard]:
     return [
         AgentCard(
-            name="research",
-            role="data_intake",
-            status="idle",
-            purpose="Collect market ideas, hypotheses, and source snapshots.",
+            name="trading",
+            role="execution",
+            status="monitoring",
+            purpose="Monitor XAU around the clock, wait for a clean entry, and keep risk inside guardrails.",
+            last_update="just now",
+            notes="Paper-first, withdrawals disabled, and every change stays auditable.",
+            current_task="Watch the XAU proxy feed and hold fire until the setup is clean.",
+            next_action="Refresh the monitor state and confirm the next entry window.",
+            health="stable",
+            progress=74,
+            watch_asset="XAU",
+            watch_symbol="GC=F",
+            watch_signal="watch",
+            watch_action="wait for pullback",
+            performance_summary="Closed trades: 0 | Realized PnL: $0.00 | Open position: none",
         ),
         AgentCard(
-            name="execution",
-            role="paper_trading",
-            status="idle",
-            purpose="Run the paper-trading loop and produce trade journals.",
-        ),
-        AgentCard(
-            name="reflection",
-            role="evaluation",
-            status="idle",
-            purpose="Review the latest closed trades and suggest one change.",
+            name="airdrop",
+            role="research_ops",
+            status="researching",
+            purpose="Track crypto airdrop opportunities, eligibility rules, and claim windows.",
+            last_update="5m ago",
+            notes="Focus on low-risk participation, wallet hygiene, and checklist logging.",
+            current_task="Scan active campaigns and shortlist the ones worth tracking.",
+            next_action="Collect network, wallet, and task prerequisites.",
+            health="watching",
+            progress=41,
         ),
     ]
+
+
+def _coerce_progress(value: Any) -> int | None:
+    if value is None:
+        return None
+    try:
+        return max(0, min(100, int(value)))
+    except (TypeError, ValueError):
+        return None
 
 
 def load_agents(path: str | Path = "state/agents.json") -> list[AgentCard]:
@@ -56,6 +88,18 @@ def load_agents(path: str | Path = "state/agents.json") -> list[AgentCard]:
                 purpose=item.get("purpose", ""),
                 last_update=item.get("last_update"),
                 notes=item.get("notes"),
+                current_task=item.get("current_task"),
+                next_action=item.get("next_action"),
+                health=item.get("health"),
+                progress=_coerce_progress(item.get("progress")),
+                watch_asset=item.get("watch_asset"),
+                watch_symbol=item.get("watch_symbol"),
+                watch_price=item.get("watch_price"),
+                watch_change_pct=item.get("watch_change_pct"),
+                watch_signal=item.get("watch_signal"),
+                watch_action=item.get("watch_action"),
+                watch_updated_at=item.get("watch_updated_at"),
+                performance_summary=item.get("performance_summary"),
             )
         )
     return agents or _default_agents()

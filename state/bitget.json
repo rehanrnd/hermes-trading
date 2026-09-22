@@ -1,0 +1,16 @@
+{
+  "exchange": "bitget",
+  "mode": "paper",
+  "demo": true,
+  "product": "futures",
+  "api_key_env": "BITGET_API_KEY",
+  "api_secret_env": "BITGET_API_SECRET",
+  "passphrase_env": "BITGET_API_PASSPHRASE",
+  "base_url": null,
+  "withdrawals_enabled": false,
+  "notes": {
+    "purpose": "Paper/demo setup only until live trading is explicitly approved.",
+    "security": "Keep withdrawals disabled and use an API key with trading only.",
+    "next_step": "Choose the Bitget market (spot or futures) before wiring live order placement."
+  }
+}

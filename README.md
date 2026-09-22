@@ -16,6 +16,18 @@ A local, reproducible scaffold for a trading agent workflow.
 - No live execution until the execution layer is explicitly added and reviewed
 - Keep changes to one variable at a time during reflection cycles
 
+## Bitget setup
+- Current state: paper/demo scaffold only
+- Config file: `state/bitget.json`
+- Local secret file: `state/bitget.env` (ignored by git)
+- Required env vars for future live/demo wiring:
+  - `BITGET_API_KEY`
+  - `BITGET_API_SECRET`
+  - `BITGET_API_PASSPHRASE`
+- Safety rule: withdrawals stay disabled; trading-only API keys only
+- Check setup status with:
+  - `python scripts/show_bitget_setup.py`
+
 ## Structure
 - `state/goal.yaml` — confirmed strategy goal
 - `state/agents.json` — simple managed-agent registry for the local dashboard
@@ -30,6 +42,7 @@ A local, reproducible scaffold for a trading agent workflow.
 - `src/hermes_trading_agent/summary.py` — backtest summary JSON export
 - `scripts/demo_paper.py` — demo simulation and reflection output (optionally from CSV or with cost model flags)
 - `scripts/run_dashboard.py` — local dashboard server on `127.0.0.1:8787`
+- `scripts/run_bitget_demo.py` — Bitget-aware paper/demo runner on top of the local simulator
 
 ## Next steps
 1. Add paper-trading execution from recorded market data.
@@ -47,3 +60,5 @@ A local, reproducible scaffold for a trading agent workflow.
   - `python scripts/demo_paper.py --journal-csv out/trade_journal.csv`
 - Export a backtest summary JSON:
   - `python scripts/demo_paper.py --summary-json out/summary.json`
+- Run the Bitget-aware paper/demo runner:
+  - `python scripts/run_bitget_demo.py`

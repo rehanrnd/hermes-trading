@@ -1,0 +1,4 @@
+asset,source,trade_index,side,entry_price,exit_price,quantity,pnl,return_pct
+XAUUSD,synthetic sample,1,long,100.0,101.5,10.0,15.0,0.015
+XAUUSD,synthetic sample,2,short,103.0,103.0,9.723300970873787,-0.0,-0.0
+XAUUSD,synthetic sample,3,long,105.0,105.0,9.538095238095238,0.0,0.0

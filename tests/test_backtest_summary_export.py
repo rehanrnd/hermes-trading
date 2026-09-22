@@ -44,6 +44,19 @@ class BacktestSummaryExportTests(unittest.TestCase):
         self.assertEqual(payload["source"], "demo")
         self.assertEqual(payload["asset"], "XAUUSD")
 
+    def test_write_backtest_summary_json_creates_parent_directories(self) -> None:
+        goal = load_goal()
+        result = run_paper_backtest([100.0, 101.0, 102.0], [1.0, 1.0, 0.0])
+
+        tmp_path = Path(self._get_tmp_dir())
+        output = tmp_path / "nested" / "exports" / "summary.json"
+        write_backtest_summary_json(output, goal=goal, result=result, source="demo")
+
+        self.assertTrue(output.exists())
+        payload = json.loads(output.read_text(encoding="utf-8"))
+        self.assertEqual(payload["source"], "demo")
+        self.assertEqual(payload["asset"], "XAUUSD")
+
     def _get_tmp_dir(self) -> str:
         import tempfile
 

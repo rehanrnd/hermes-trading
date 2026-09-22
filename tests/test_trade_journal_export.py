@@ -54,6 +54,24 @@ class TradeJournalExportTests(unittest.TestCase):
         self.assertTrue(csv_path.exists())
         self.assertIn("XAUUSD,demo,1,long,50.0,55.0,1.0,5.0,0.1", csv_path.read_text(encoding="utf-8"))
 
+    def test_write_trade_journal_csv_creates_parent_directories(self) -> None:
+        result = SimulationResult(
+            trades=[Trade(side="long", entry_price=50.0, exit_price=55.0, quantity=1.0)],
+            equity_curve=[1000.0, 1005.0],
+            returns=[0.0, 0.005],
+            final_equity=1005.0,
+            max_drawdown=0.0,
+            sharpe=1.0,
+            total_return=0.005,
+        )
+
+        tmp_dir = Path(self._get_tmp_dir())
+        csv_path = tmp_dir / "nested" / "exports" / "journal.csv"
+        write_trade_journal_csv(csv_path, result, asset="XAUUSD", source="demo")
+
+        self.assertTrue(csv_path.exists())
+        self.assertIn("XAUUSD,demo,1,long,50.0,55.0,1.0,5.0,0.1", csv_path.read_text(encoding="utf-8"))
+
     def _get_tmp_dir(self) -> str:
         import tempfile
 

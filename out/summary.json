@@ -1,0 +1,10 @@
+{
+  "asset": "XAUUSD",
+  "final_equity": 10015.0,
+  "max_drawdown": 0.0014693913144585163,
+  "recommendation": "Tighten the entry filter so only higher-conviction signals are traded.",
+  "sharpe": 0.7647101222694103,
+  "source": "synthetic sample",
+  "total_return": 0.0015,
+  "trade_count": 3
+}
